@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapr-go-calculator-multiplier
+  labels:
+    app: multiply
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiply
+  template:
+    metadata:
+      labels:
+        app: multiply
+      annotations:
+        dapr.io/sidecar-liveness-probe-delay-seconds: "30"
+        dapr.io/sidecar-liveness-probe-timeout-seconds: "30"
+        dapr.io/sidecar-liveness-probe-period-seconds: "30"
+        dapr.io/log-level: "debug"
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dapr-go-calculator-multiplier"
+        dapr.io/app-port: "6100"
+        dapr.io/config: "appconfig"
+    spec:
+      containers:
+      - name: multiply
+        image: localhost:32000/dapr-go-calculator-multiplier:latest
+        env:
+          - name: "APP_PORT"
+            value: "6100"
+        ports:
+        - containerPort: 6100
+        imagePullPolicy: Always

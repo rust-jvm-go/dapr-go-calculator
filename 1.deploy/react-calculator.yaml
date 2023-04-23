@@ -1,0 +1,47 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dapr-go-calculator-react-frontend
+  labels:
+    app: dapr-go-calculator-react-frontend
+spec:
+  selector:
+    app: dapr-go-calculator-react-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapr-go-calculator-react-frontend
+  labels:
+    app: dapr-go-calculator-react-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dapr-go-calculator-react-frontend
+  template:
+    metadata:
+      labels:
+        app: dapr-go-calculator-react-frontend
+      annotations:
+        dapr.io/sidecar-liveness-probe-delay-seconds: "30"
+        dapr.io/sidecar-liveness-probe-timeout-seconds: "30"
+        dapr.io/sidecar-liveness-probe-period-seconds: "30"
+        dapr.io/log-level: "debug"
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dapr-go-calculator-react-frontend"
+        dapr.io/app-port: "8080"
+        dapr.io/config: "appconfig"
+    spec:
+      containers:
+      - name: dapr-go-calculator-react-frontend
+        image: localhost:32000/dapr-go-calculator-react-frontend:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
