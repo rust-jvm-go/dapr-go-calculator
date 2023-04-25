@@ -2,12 +2,12 @@
 
 (cd ./1.deploy && kubectl delete -f multiplier.yaml)
 
-docker rmi --force "$(docker inspect --format="{{.Id}}" localhost:32000/dapr-go-calculator-multiplier:registry)"
+docker rmi --force "$(docker inspect --format="{{.Id}}" localhost:32000/dapr-go-calculator-multiplier)"
 
-docker build -f multiplier/Dockerfile multiplier/. -t localhost:32000/dapr-go-calculator-multiplier:registry
+docker build -f multiplier/Dockerfile multiplier/. -t localhost:32000/dapr-go-calculator-multiplier
 
-microk8s.ctr images rm localhost:32000/dapr-go-calculator-multiplier:registry
-microk8s.ctr images rm --sync "$(microk8s.ctr images list -q | grep localhost:32000/dapr-go-calculator-multiplier@sha256)"
+sudo microk8s.ctr images rm localhost:32000/dapr-go-calculator-multiplier:registry
+sudo microk8s.ctr images rm --sync "$(sudo microk8s.ctr images list -q | grep localhost:32000/dapr-go-calculator-multiplier@sha256)"
 
 docker push localhost:32000/dapr-go-calculator-multiplier:registry
 
