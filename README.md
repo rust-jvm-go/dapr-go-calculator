@@ -1,7 +1,15 @@
 
-![Dapr Distributed Calculator](./dapr-go-calculator-k8s.png)
+# dapr-go-calculator
 
-![Kubernetes Dashboard](./dapr-go-calculator-k8s-dashboard.png)
+### Dapr microservices "distributed calculator" recreation.
+
+#### Reference:
+
+* [Distributed Calculator](https://github.com/dapr/quickstarts/tree/master/tutorials/distributed-calculator)
+
+![Dapr Distributed Calculator](0.docs/dapr-go-calculator-k8s.png)
+
+![Kubernetes Dashboard](0.docs/dapr-go-calculator-k8s-dashboard.png)
 
 # When upgrading to a new Dapr release:
 
